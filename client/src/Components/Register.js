@@ -1,5 +1,7 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import {useSelector,useDispatch} from 'react-redux';
+import { register, reset } from "../features/auth/authSlice";
+import {useNavigate} from 'react-router-dom';
 
 function Register(){
 
@@ -7,7 +9,16 @@ function Register(){
     name:'',email:'',password:'',cpassword:''
    });
 
+   const dispatch=useDispatch();
+   const {user,isLoading, isSuccess,isError,message}=useSelector(state=>state.auth)
+   const navigate=useNavigate();
    const {name,email,password,cpassword}=formData;
+
+   useEffect(()=>{
+      if(isError) alert(message);
+      if(isSuccess||user) navigate('/');
+      dispatch(reset())
+   },[user,navigate,isError,isSuccess,dispatch,message]);
 
    const onChange=(e)=>{
        setFormData((prevState)=>({
@@ -19,7 +30,12 @@ function Register(){
 
    const onSubmit=(e)=>{
       e.preventDefault();
-      console.log(formData);
+      if(password!==cpassword){
+         alert("passwords are different")
+      }else{
+         const userData={name,email,password}
+         dispatch(register(userData));
+      }
    }
 
     return (

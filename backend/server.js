@@ -5,13 +5,13 @@ import taskRouter from './routes/taskRoute.js';
 import errorHandler from './middleware/errorHandler.js';
 import { CustomError } from './utils/CustomError.js';
 import userRouter from './routes/userRoute.js';
-
+import cors from 'cors';
 
 
 dotenv.config({path:'config/config.env'});
 connectDb();
 const app=express(); 
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
