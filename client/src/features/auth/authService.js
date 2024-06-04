@@ -13,7 +13,15 @@ const register=async (userData)=>{
 
 const logout=()=>localStorage.removeItem('user');
 
+const login=async (userData)=>{
+   const response=await axios.post(`${URL}/login`,userData);
+   if(response.data){
+    localStorage.setItem('user',JSON.stringify(response.data));
+   }
+   return response.data;
+}
+
 //This line creates an object named authService. The object has a single property register.
-const authService={register,logout};//object creation with shorthand property
+const authService={register,logout,login};//object creation with shorthand property
 //without shorthand: const authService={register:register}
 export default authService;

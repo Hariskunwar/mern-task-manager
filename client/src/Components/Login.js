@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login, reset } from "../features/auth/authSlice";
 
 
 
@@ -7,13 +10,24 @@ function Login(){
   const [formData,setFormData] =useState({email:'',password:''})
 
   const {email,password}=formData;
+ 
+  const navigate=useNavigate();
+  const {user ,isError,isSuccess,message}=useSelector(state=>state.auth);
+  const dispatch=useDispatch();
+
+  useEffect(()=>{
+   if(isError) alert(message);
+   if(isSuccess||user) navigate('/');
+   dispatch(reset())
+  },[user,isError,isSuccess,message,dispatch,navigate]);
 
   const onChange=(e)=>{
      setFormData((prevState)=>({...prevState,[e.target.name]:e.target.value}))
   }
   const onSubmit=(e)=>{
      e.preventDefault();
-     console.log(formData);
+    const userData={email,password};
+    dispatch(login(userData))
   }
   
     return (
