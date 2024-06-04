@@ -14,6 +14,9 @@ function Dashboard(){
       <div>
         <h1>Welcome {user&&user.name}</h1>
         <p>Task Dashboard</p>
+        <div>
+          <button onClick={()=>navigate('/alltasks')}>Check Tasks</button>
+        </div>
         <TaskForm />
       </div>
     );
