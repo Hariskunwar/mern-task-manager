@@ -8,11 +8,12 @@ const register=async (userData)=>{
         if(response.data){
             localStorage.setItem('user',JSON.stringify(response.data));
         }
-        return response.data;
-    
+        return response.data;   
 }
 
+const logout=()=>localStorage.removeItem('user');
+
 //This line creates an object named authService. The object has a single property register.
-const authService={register};//object creation with shorthand property
+const authService={register,logout};//object creation with shorthand property
 //without shorthand: const authService={register:register}
 export default authService;
